@@ -1,6 +1,3 @@
-# Define variables
-APP_NAME=migros-courier-tracking
-
 # Build the Docker images
 build:
 	docker-compose build
