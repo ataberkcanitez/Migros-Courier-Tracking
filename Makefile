@@ -2,7 +2,7 @@
 build:
 	docker-compose build
 
-# Shortcut for building, starting, and tailing logs
+# Shortcut for building, starting
 start:
 	docker-compose up --build -d
 
