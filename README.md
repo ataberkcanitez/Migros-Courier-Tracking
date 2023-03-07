@@ -10,7 +10,7 @@ A Restful web application that trracks the streaming geolocations of couriers an
  - Docker
 
 ## How To Run With Docker
-    - Clone the repository
+- Clone the repository
 ```bash
 $ git clone git@github.com:ataberkcanitez/Migros-Courier-Tracking.git
 ```
@@ -18,10 +18,16 @@ $ git clone git@github.com:ataberkcanitez/Migros-Courier-Tracking.git
  ```bash
 $ cd Migros-Courier-Tracking
  ```
-- Run `docker-compose up` in the root directory
+then
+```bash
+$ make up
+ ```
+or
 ```bash
 $ docker-compose up
  ```
+wait until it buids and runs the application. Please check if there is any other process that uses `8080` port.
+
 
 ## Testing:
 - To execute unit tests:
