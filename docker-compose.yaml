@@ -21,8 +21,6 @@ services:
       MYSQL_USER: myuser
       MYSQL_PASSWORD: mypassword
       MYSQL_ROOT_PASSWORD: myrootpassword
-    volumes:
-      - ./migrations:/docker-entrypoint-initdb.d
     healthcheck:
       test: "/usr/bin/mysql --user=myuser --password=mypassword --execute \"SHOW DATABASES;\""
       interval: 2s
