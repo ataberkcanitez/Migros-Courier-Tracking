@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-class StoreDataAdapterTest {
+public class StoreDataAdapterTest {
 
     @Mock
     private StoreJpaRepository storeJpaRepository;
@@ -28,7 +28,7 @@ class StoreDataAdapterTest {
     private StoreDataAdapter storeDataAdapter;
 
     @Test
-    void testSave() {
+    public void testSave() {
         // given
         CreateStore createStore = new CreateStore("Test Store", new Location(1.0, 2.0));
         StoreEntity storeEntity = new StoreEntity(1L, createStore.getName(), createStore.getLocation().getLat(), createStore.getLocation().getLon());
@@ -46,7 +46,7 @@ class StoreDataAdapterTest {
     }
 
     @Test
-    void testFindAll() {
+    public void testFindAll() {
         // given
         StoreEntity storeEntity = new StoreEntity(1L, "Test Store", 1.0, 2.0);
         when(storeJpaRepository.findAll()).thenReturn(Collections.singletonList(storeEntity));
@@ -64,7 +64,7 @@ class StoreDataAdapterTest {
     }
 
     @Test
-    void testFindById() {
+    public void testFindById() {
         // given
         Long storeId = 1L;
         StoreEntity storeEntity = new StoreEntity(storeId, "Test Store", 1.0, 2.0);
@@ -82,7 +82,7 @@ class StoreDataAdapterTest {
     }
 
     @Test(expected = RuntimeException.class)
-    void testFindByIdNotFound() {
+    public void testFindByIdNotFound() {
         // given
         Long storeId = 1L;
 
@@ -94,7 +94,7 @@ class StoreDataAdapterTest {
     }
 
     @Test
-    void testRemoveById() {
+    public void testRemoveById() {
         // given
         Long storeId = 1L;
 
@@ -103,5 +103,47 @@ class StoreDataAdapterTest {
 
         // then
         verify(storeJpaRepository, times(1)).deleteById(storeId);
+    }
+
+    @Test
+    public void testFindNearbyStoresAndNotEnteredRecentlyReturnsStore() {
+        // given
+        Double latitude = 37.7749;
+        Double longitude = -122.4194;
+        Long courierId = 1L;
+        Location location = new Location(latitude, longitude);
+        StoreEntity storeEntity = new StoreEntity();
+        storeEntity.setId(1L);
+        storeEntity.setName("Test Store");
+        storeEntity.setLatitude(latitude);
+        storeEntity.setLongitude(longitude);
+        when(storeJpaRepository.findNearbyStoresAndNotEnteredRecently(latitude, longitude, courierId))
+                .thenReturn(Optional.of(storeEntity));
+
+        // when
+        Store result = storeDataAdapter.findNearbyStoresAndNotEnteredRecently(courierId, location);
+
+        // then
+        assertNotNull(result);
+        assertEquals(storeEntity.getId(), result.getId());
+        assertEquals(storeEntity.getName(), result.getName());
+        assertEquals(storeEntity.getLatitude(), result.getLocation().getLat());
+        assertEquals(storeEntity.getLongitude(), result.getLocation().getLon());
+    }
+
+    @Test
+    public void testFindNearbyStoresAndNotEnteredRecentlyThrowsExceptionWhenNoStoreFound() {
+        // given
+        double latitude = 37.7749;
+        double longitude = -122.4194;
+        Long courierId = 1L;
+        Location location = new Location(latitude, longitude);
+
+        // when
+        when(storeJpaRepository.findNearbyStoresAndNotEnteredRecently(latitude, longitude, courierId))
+                .thenReturn(Optional.empty());
+
+        //  then
+        assertThrows(RuntimeException.class, () -> storeDataAdapter.findNearbyStoresAndNotEnteredRecently(courierId, location));
     }
 }

@@ -1,5 +1,6 @@
 package com.ataberkcanitez.migroscouriertracking.infra.adapters.store.jpa;
 
+import com.ataberkcanitez.migroscouriertracking.domain.location.model.Location;
 import com.ataberkcanitez.migroscouriertracking.domain.store.model.Store;
 import com.ataberkcanitez.migroscouriertracking.domain.store.port.StorePort;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.jpa.entity.StoreEntity;
@@ -38,5 +39,10 @@ public class StoreDataAdapter implements StorePort {
     @Override
     public void removeById(Long id) {
         storeJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public Store findNearbyStoresAndNotEnteredRecently(Long courierId, Location location) {
+        return storeJpaRepository.findNearbyStoresAndNotEnteredRecently(location.getLat(), location.getLon(), courierId).orElseThrow(() -> new RuntimeException("No nearby store found")).toModel();
     }
 }
