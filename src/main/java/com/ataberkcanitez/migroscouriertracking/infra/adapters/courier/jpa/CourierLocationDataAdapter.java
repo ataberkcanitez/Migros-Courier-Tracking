@@ -9,13 +9,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 @RequiredArgsConstructor
 public class CourierLocationDataAdapter implements CourierLocationPort {
     private final CourierTravelJpaRepository travelJpaRepository;
-    private HashMap<Long, Courier> courierTravelMap = new HashMap<>();
+    private final ConcurrentHashMap<Long, Courier> courierTravelMap = new ConcurrentHashMap<>();
 
     /*
         Responsible for writing every update to database.
