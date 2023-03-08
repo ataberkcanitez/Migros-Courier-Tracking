@@ -13,7 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -158,7 +158,7 @@ public class StoreDataAdapterTest {
         // given
         long courierId = 1L;
         long storeId = 2L;
-        LocalDate entranceDate = LocalDate.now();
+        Timestamp entranceDate = new Timestamp(System.currentTimeMillis());
         StoreEntranceEntity storeEntranceEntity = StoreEntranceEntity.builder()
                 .courierId(courierId)
                 .storeId(storeId)
