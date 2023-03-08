@@ -31,8 +31,8 @@ public class MigrosStore implements StoreService {
     public Store findById(Long id) {
         try {
             return storePort.findById(id);
-        } catch (Exception e) {
-            log.error("Error while finding store with id: {}", id, e);
+        } catch (RuntimeException e) {
+            log.error("Error {} for store with id: {}", e.getMessage(),  id);
             return null;
         }
     }
