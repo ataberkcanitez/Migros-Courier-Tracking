@@ -23,7 +23,7 @@ CREATE TABLE entrances (
   id INT AUTO_INCREMENT PRIMARY KEY,
   store_id INT,
   courier_id INT,
-  entrance_date DATE,
+  entrance_date timestamp,
   FOREIGN KEY (store_id) REFERENCES stores(id),
   FOREIGN KEY (courier_id) REFERENCES courier(id)
 );

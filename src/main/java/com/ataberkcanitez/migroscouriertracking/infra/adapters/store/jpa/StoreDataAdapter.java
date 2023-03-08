@@ -11,7 +11,7 @@ import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.rest.dto.Cr
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -57,7 +57,7 @@ public class StoreDataAdapter implements StorePort {
         StoreEntranceEntity storeEntranceEntity = new StoreEntranceEntity();
         storeEntranceEntity.setStoreId(storeId);
         storeEntranceEntity.setCourierId(courierId);
-        storeEntranceEntity.setEntranceDate(LocalDate.now());
+        storeEntranceEntity.setEntranceDate(new Timestamp(System.currentTimeMillis()));
 
         storeEntranceJpaRepository.save(storeEntranceEntity);
     }

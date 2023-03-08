@@ -3,7 +3,7 @@ package com.ataberkcanitez.migroscouriertracking.infra.adapters.store.jpa.entity
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 
 @Entity
@@ -25,5 +25,5 @@ public class StoreEntranceEntity {
     private Long courierId;
 
     @Column(name = "entrance_date")
-    private LocalDate entranceDate;
+    private Timestamp entranceDate;
 }
