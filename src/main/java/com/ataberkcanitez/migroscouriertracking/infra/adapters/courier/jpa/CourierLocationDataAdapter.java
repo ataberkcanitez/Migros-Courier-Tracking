@@ -15,7 +15,7 @@ public class CourierLocationDataAdapter implements CourierLocationPort {
     private final CourierTravelJpaRepository travelJpaRepository;
 
     @Override
-    public void track(int courierId, Location location) {
+    public void track(long courierId, Location location) {
         TravelEntity travelEntity = new TravelEntity();
         travelEntity.setCourierId(courierId);
         travelEntity.setLatitude(location.getLat());

@@ -2,6 +2,7 @@ package com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.jpa;
 
 import com.ataberkcanitez.migroscouriertracking.domain.location.model.Location;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.jpa.entity.TravelEntity;
+import com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.jpa.repository.CourierJpaRepository;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.jpa.repository.CourierTravelJpaRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +24,7 @@ public class CourierLocationDataAdapterTest {
     public void shouldTrackCourierLocation() {
         // Given
         adapter = new CourierLocationDataAdapter(travelJpaRepository);
-        int courierId = 123;
+        long courierId = 123;
         Location location = new Location(37.7749, -122.4194);
 
         // When

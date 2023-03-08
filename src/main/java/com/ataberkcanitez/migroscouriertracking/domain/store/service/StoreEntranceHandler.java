@@ -20,7 +20,7 @@ public class StoreEntranceHandler implements CourierLocationSubscriber {
     }
 
     @Override
-    public void receiveLocationUpdate(int courierId, Location location) {
+    public void receiveLocationUpdate(long courierId, Location location) {
         log.info("[StoreEntranceHandler] Courier with id: {} entered the store with location: {}", courierId, location);
         // TODO: get the stores within 100m near to the given location for courier.
     }

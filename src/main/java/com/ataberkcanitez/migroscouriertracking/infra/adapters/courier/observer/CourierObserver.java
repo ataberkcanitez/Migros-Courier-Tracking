@@ -23,7 +23,7 @@ public class CourierObserver implements CourierLocationSubject {
     }
 
     @Override
-    public void notifyObservers(int courierId, Location location) {
+    public void notifyObservers(long courierId, Location location) {
         observers.forEach(observer -> observer.receiveLocationUpdate(courierId, location));
     }
 }

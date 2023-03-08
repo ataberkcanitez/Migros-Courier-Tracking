@@ -21,7 +21,7 @@ public class TravelEntity {
     private Long id;
 
     @Column(name = "courier_id")
-    private int courierId;
+    private long courierId;
 
     @Column(name = "latitude")
     private Double latitude;

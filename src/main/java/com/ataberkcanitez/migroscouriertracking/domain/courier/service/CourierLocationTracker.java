@@ -22,7 +22,7 @@ public class CourierLocationTracker implements CourierLocationSubscriber {
     }
 
     @Override
-    public void receiveLocationUpdate(int courierId, Location location) {
+    public void receiveLocationUpdate(long courierId, Location location) {
         log.info("[CourierLocationHandler] Courier with id: {} entered the store with location: {}", courierId, location);
         courierLocationPort.track(courierId, location);
 

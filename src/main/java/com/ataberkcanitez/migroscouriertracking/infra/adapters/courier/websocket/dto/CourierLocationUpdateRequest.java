@@ -10,6 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class CourierLocationUpdateRequest {
-    private int courierId;
+    private long courierId;
     private Location location;
 }
