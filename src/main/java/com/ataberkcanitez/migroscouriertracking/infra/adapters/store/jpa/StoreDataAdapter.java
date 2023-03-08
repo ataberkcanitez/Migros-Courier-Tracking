@@ -4,17 +4,21 @@ import com.ataberkcanitez.migroscouriertracking.domain.location.model.Location;
 import com.ataberkcanitez.migroscouriertracking.domain.store.model.Store;
 import com.ataberkcanitez.migroscouriertracking.domain.store.port.StorePort;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.jpa.entity.StoreEntity;
+import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.jpa.entity.StoreEntranceEntity;
+import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.jpa.repository.StoreEntranceJpaRepository;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.jpa.repository.StoreJpaRepository;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.rest.dto.CreateStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class StoreDataAdapter implements StorePort {
     private final StoreJpaRepository storeJpaRepository;
+    private final StoreEntranceJpaRepository storeEntranceJpaRepository;
 
     @Override
     public Store save(CreateStore store) {
@@ -43,6 +47,18 @@ public class StoreDataAdapter implements StorePort {
 
     @Override
     public Store findNearbyStoresAndNotEnteredRecently(Long courierId, Location location) {
-        return storeJpaRepository.findNearbyStoresAndNotEnteredRecently(location.getLat(), location.getLon(), courierId).orElseThrow(() -> new RuntimeException("No nearby store found")).toModel();
+        return storeJpaRepository.findNearbyStoresAndNotEnteredRecently(location.getLat(), location.getLon(), courierId)
+                .orElseThrow(() -> new RuntimeException("No nearby store found"))
+                .toModel();
+    }
+
+    @Override
+    public void saveEntrance(long courierId, long storeId) {
+        StoreEntranceEntity storeEntranceEntity = new StoreEntranceEntity();
+        storeEntranceEntity.setStoreId(storeId);
+        storeEntranceEntity.setCourierId(courierId);
+        storeEntranceEntity.setEntranceDate(LocalDate.now());
+
+        storeEntranceJpaRepository.save(storeEntranceEntity);
     }
 }

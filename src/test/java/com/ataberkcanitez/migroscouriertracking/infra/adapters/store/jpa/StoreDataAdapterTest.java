@@ -3,6 +3,8 @@ package com.ataberkcanitez.migroscouriertracking.infra.adapters.store.jpa;
 import com.ataberkcanitez.migroscouriertracking.domain.location.model.Location;
 import com.ataberkcanitez.migroscouriertracking.domain.store.model.Store;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.jpa.entity.StoreEntity;
+import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.jpa.entity.StoreEntranceEntity;
+import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.jpa.repository.StoreEntranceJpaRepository;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.jpa.repository.StoreJpaRepository;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.rest.dto.CreateStore;
 import org.junit.Test;
@@ -11,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +26,9 @@ public class StoreDataAdapterTest {
 
     @Mock
     private StoreJpaRepository storeJpaRepository;
+
+    @Mock
+    private StoreEntranceJpaRepository storeEntranceJpaRepository;
 
     @InjectMocks
     private StoreDataAdapter storeDataAdapter;
@@ -145,5 +151,25 @@ public class StoreDataAdapterTest {
 
         //  then
         assertThrows(RuntimeException.class, () -> storeDataAdapter.findNearbyStoresAndNotEnteredRecently(courierId, location));
+    }
+
+    @Test
+    public void testSaveEntrance() {
+        // given
+        long courierId = 1L;
+        long storeId = 2L;
+        LocalDate entranceDate = LocalDate.now();
+        StoreEntranceEntity storeEntranceEntity = StoreEntranceEntity.builder()
+                .courierId(courierId)
+                .storeId(storeId)
+                .entranceDate(entranceDate)
+                .build();
+        doReturn(storeEntranceEntity).when(storeEntranceJpaRepository).save(any());
+
+        // when
+        storeDataAdapter.saveEntrance(courierId, storeId);
+
+        // then
+        verify(storeEntranceJpaRepository, times(1)).save(any());
     }
 }

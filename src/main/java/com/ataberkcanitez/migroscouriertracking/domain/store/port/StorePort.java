@@ -12,4 +12,5 @@ public interface StorePort {
     Store findById(Long id);
     void removeById(Long id);
     Store findNearbyStoresAndNotEnteredRecently(Long courierId, Location location);
+    void saveEntrance(long courierId, long storeId);
 }
