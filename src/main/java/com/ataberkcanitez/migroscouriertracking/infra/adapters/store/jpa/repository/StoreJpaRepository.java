@@ -10,16 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface StoreJpaRepository extends JpaRepository<StoreEntity, Long> {
-    @Query(value = "SELECT s.id, s.name, s.latitude, s.longitude " +
-            "FROM stores s " +
-            "LEFT JOIN entrances e ON e.store_id = s.id AND e.entrance_date >= DATE_SUB(NOW(), INTERVAL 1 MINUTE) AND e.courier_id = :courierId " +
-            "WHERE ( " +
-            "  6371000 * 2 * ASIN(SQRT( " +
-            "    POWER(SIN(RADIANS((:latitude - s.latitude) / 2)), 2) + " +
-            "    COS(RADIANS(:latitude)) * COS(RADIANS(s.latitude)) * " +
-            "    POWER(SIN(RADIANS((:longitude - s.longitude) / 2)), 2) " +
-            "  ))) <= 100 " +
-            "AND e.id IS NULL " +
-            "LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT s.* FROM stores s WHERE (6371000 * acos(cos(radians(:latitude)) * cos(radians(s.latitude)) * cos(radians(s.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(s.latitude)))) <= 100 AND NOT EXISTS (SELECT 1 FROM entrances e WHERE e.store_id = s.id AND e.courier_id = :courierId AND e.entrance_date >= DATE_SUB(NOW(), INTERVAL 1 MINUTE)) LIMIT 1", nativeQuery = true)
     Optional<StoreEntity> findNearbyStoresAndNotEnteredRecently(@Param("latitude") Double latitude, @Param("longitude") Double longitude, @Param("courierId") Long courierId);
 }

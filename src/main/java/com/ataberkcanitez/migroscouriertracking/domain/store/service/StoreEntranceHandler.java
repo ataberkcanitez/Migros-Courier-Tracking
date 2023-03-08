@@ -24,13 +24,12 @@ public class StoreEntranceHandler implements CourierLocationSubscriber {
 
     @Override
     public void receiveLocationUpdate(long courierId, Location location) {
-        log.info("[StoreEntranceHandler] Courier with id: {} entered the store with location: {}", courierId, location);
-        // TODO: get the stores within 100m near to the given location for courier.
         try {
             Store entranceStore = storePort.findNearbyStoresAndNotEnteredRecently(courierId, location);
+            log.info("[StoreEntranceHandler] entranceStore: {}", entranceStore.toString());
 
             log.info("[StoreEntranceHandler] Courier with id: {} entered the store with id: {}, store name: {}", courierId, entranceStore.getId(), entranceStore.getName());
-
+            storePort.saveEntrance(courierId, entranceStore.getId());
         } catch (Exception e) {
             log.info("[StoreEntranceHandler] Courier with id: {} did not enter any store", courierId);
         }

@@ -47,6 +47,7 @@ public class StoreEntranceHandlerTest {
 
         // Then
         verify(storePort).findNearbyStoresAndNotEnteredRecently(eq(courierId), any(Location.class));
+        verify(storePort).saveEntrance(eq(courierId), eq(1L));
         verifyNoMoreInteractions(storePort, courierLocationSubject);
     }
 
