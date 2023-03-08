@@ -12,19 +12,20 @@ CREATE TABLE courier (
 
 CREATE TABLE travel (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  courierId INT,
+  courier_id INT,
   latitude DOUBLE,
   longitude DOUBLE,
-  FOREIGN KEY (courierId) REFERENCES courier(id)
+  travel_date timestamp,
+  FOREIGN KEY (courier_id) REFERENCES courier(id)
 );
 
 CREATE TABLE entrances (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  storeId INT,
-  courierId INT,
+  store_id INT,
+  courier_id INT,
   entrance_date DATE,
-  FOREIGN KEY (storeId) REFERENCES stores(id),
-  FOREIGN KEY (courierId) REFERENCES courier(id)
+  FOREIGN KEY (store_id) REFERENCES stores(id),
+  FOREIGN KEY (courier_id) REFERENCES courier(id)
 );
 
 INSERT INTO stores (name, latitude, longitude)
