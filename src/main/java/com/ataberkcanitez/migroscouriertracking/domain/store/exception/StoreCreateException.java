@@ -1,4 +1,4 @@
-package com.ataberkcanitez.migroscouriertracking.domain.common.exception;
+package com.ataberkcanitez.migroscouriertracking.domain.store.exception;
 
 import lombok.Getter;
 import lombok.Setter;

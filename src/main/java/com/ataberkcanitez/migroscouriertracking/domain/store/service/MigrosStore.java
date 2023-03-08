@@ -1,6 +1,6 @@
 package com.ataberkcanitez.migroscouriertracking.domain.store.service;
 
-import com.ataberkcanitez.migroscouriertracking.domain.common.exception.StoreCreateException;
+import com.ataberkcanitez.migroscouriertracking.domain.store.exception.StoreCreateException;
 import com.ataberkcanitez.migroscouriertracking.domain.store.model.Store;
 import com.ataberkcanitez.migroscouriertracking.domain.store.port.StorePort;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.rest.dto.CreateStore;
