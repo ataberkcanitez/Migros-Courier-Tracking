@@ -28,7 +28,6 @@ public class CourierLocationTracker implements CourierLocationSubscriber {
 
     @Override
     public void receiveLocationUpdate(long courierId, Location location) {
-        log.info("[CourierLocationHandler] Courier with id: {} entered the store with location: {}", courierId, location);
         courierLocationPort.track(courierId, location);
 
         Courier courier = courierLocationPort.getCourierTravelTrack(courierId);
@@ -38,7 +37,7 @@ public class CourierLocationTracker implements CourierLocationSubscriber {
         }
         double distance = courier.getLastLocation().calculateDistance(location);
         courier.setLastLocation(location);
-        courier.setTotalTravelDistance(distance);
+        courier.setTotalTravelDistance(courier.getTotalTravelDistance() + distance);
         courierLocationPort.updateCourierTravel(courier);
     }
 
