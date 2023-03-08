@@ -36,6 +36,12 @@ public class StoreEntranceHandlerTest {
     private final Location storeLocation = new Location(storeLatitude, storeLongitude);
 
     @Test
+    public void shouldAttachObserverToCourierLocationSubject() {
+        storeEntranceHandler.init();
+        verify(courierLocationSubject).attachObserver(storeEntranceHandler);
+    }
+
+    @Test
     public void receiveLocationUpdate_shouldFindNearbyStoreAndLogEntry() throws Exception {
         // Given
         long courierId = 1L;

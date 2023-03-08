@@ -26,4 +26,9 @@ public class CourierObserver implements CourierLocationSubject {
     public void notifyObservers(long courierId, Location location) {
         observers.forEach(observer -> observer.receiveLocationUpdate(courierId, location));
     }
+
+    @Override
+    public List<CourierLocationSubscriber> getObservers() {
+        return observers;
+    }
 }
