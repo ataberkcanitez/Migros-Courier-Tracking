@@ -3,12 +3,12 @@ CREATE TABLE stores (
   name VARCHAR(255),
   latitude DOUBLE NOT NULL,
   longitude DOUBLE NOT NULL
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE courier (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE travel (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -17,7 +17,7 @@ CREATE TABLE travel (
   longitude DOUBLE,
   travel_date timestamp,
   FOREIGN KEY (courier_id) REFERENCES courier(id)
-);
+) DEFAULT CHARSET=utf8;
 
 CREATE TABLE entrances (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -26,7 +26,7 @@ CREATE TABLE entrances (
   entrance_date timestamp,
   FOREIGN KEY (store_id) REFERENCES stores(id),
   FOREIGN KEY (courier_id) REFERENCES courier(id)
-);
+) DEFAULT CHARSET=utf8;
 
 INSERT INTO stores (name, latitude, longitude)
 VALUES
