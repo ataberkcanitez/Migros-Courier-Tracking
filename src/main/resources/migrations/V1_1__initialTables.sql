@@ -35,3 +35,8 @@ VALUES
   ('Beylikdüzü 5M Migros', 41.0066851, 28.6552262),
   ('Ortaköy MMM Migros', 41.055783, 29.0210292),
   ('Caddebostan MMM Migros', 40.9632463, 29.0630908);
+
+INSERT INTO courier (name) VALUES ('courier1');
+INSERT INTO courier (name) VALUES ('courier2');
+INSERT INTO courier (name) VALUES ('courier3');
+INSERT INTO courier (name) VALUES ('courier4');
