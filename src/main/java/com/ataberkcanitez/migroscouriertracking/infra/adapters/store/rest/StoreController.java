@@ -2,12 +2,11 @@ package com.ataberkcanitez.migroscouriertracking.infra.adapters.store.rest;
 
 import com.ataberkcanitez.migroscouriertracking.domain.store.model.Store;
 import com.ataberkcanitez.migroscouriertracking.domain.store.service.StoreService;
+import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.rest.dto.CreateStore;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
@@ -24,5 +23,17 @@ public class StoreController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(store);
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> createStore(@Valid @RequestBody CreateStore createStore) {
+        storeService.save(createStore);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteStore(@PathVariable Long id) {
+        storeService.removeById(id);
+        return ResponseEntity.ok().build();
     }
 }
