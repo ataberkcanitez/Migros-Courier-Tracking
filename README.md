@@ -26,7 +26,7 @@ or
 ```bash
 $ docker-compose up
  ```
-wait until it buids and runs the application. Please check if there is any other process that uses `8080` port.
+wait until it buids and runs the application. Please check if there is any other process that uses `8081` port.
 
 
 ## Testing
