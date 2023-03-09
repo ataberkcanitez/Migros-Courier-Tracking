@@ -4,25 +4,29 @@ import com.ataberkcanitez.migroscouriertracking.domain.courier.model.Courier;
 import com.ataberkcanitez.migroscouriertracking.domain.location.model.Location;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.jpa.entity.CourierEntity;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.jpa.repository.CourierJpaRepository;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class CourierDataAdapterTest {
 
     @Mock
     private CourierJpaRepository courierJpaRepository;
 
-    @InjectMocks
     private CourierDataAdapter courierDataAdapter;
+
+    @BeforeEach
+    void setup() {
+        MockitoAnnotations.openMocks(this);
+        courierDataAdapter = new CourierDataAdapter(courierJpaRepository);
+    }
 
     @Test
     public void testGetCourierById() {

@@ -3,17 +3,15 @@ package com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.websocke
 import com.ataberkcanitez.migroscouriertracking.domain.location.model.Location;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.websocket.dto.CourierLocationUpdateRequest;
 import com.fasterxml.jackson.core.JsonParseException;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class CourierWebSocketHandlerTest {
 
     private static final String MESSAGE_PAYLOAD = "{\"courierId\":1,\"location\":{\"lat\":50.0,\"lon\":25.0}}";
@@ -24,12 +22,12 @@ public class CourierWebSocketHandlerTest {
     @Mock
     private WebSocketSession session;
 
-    @InjectMocks
     private CourierWebSocketHandler courierWebSocketHandler;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
+        courierWebSocketHandler = new CourierWebSocketHandler(courierObserver);
     }
 
     @Test
@@ -41,10 +39,10 @@ public class CourierWebSocketHandlerTest {
         courierWebSocketHandler.handleTextMessage(session, message);
     }
 
-    @Test(expected = JsonParseException.class)
+    @Test
     public void testHandleTextMessageWithInvalidPayload() throws Exception {
         TextMessage message = new TextMessage("invalid payload");
 
-        courierWebSocketHandler.handleTextMessage(session, message);
+        assertThrows(JsonParseException.class, () -> courierWebSocketHandler.handleTextMessage(session, message));
     }
 }

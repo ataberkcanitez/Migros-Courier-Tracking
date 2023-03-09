@@ -1,20 +1,15 @@
 package com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.observer;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.ataberkcanitez.migroscouriertracking.domain.common.observer.CourierLocationSubscriber;
 import com.ataberkcanitez.migroscouriertracking.domain.location.model.Location;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
 
-@RunWith(MockitoJUnitRunner.class)
 public class CourierObserverTest {
 
     @Mock
@@ -22,12 +17,12 @@ public class CourierObserverTest {
     @Mock
     private CourierLocationSubscriber subscriber2;
 
-    @InjectMocks
     private CourierObserver courierObserver;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
+        courierObserver = new CourierObserver();
     }
 
     @Test

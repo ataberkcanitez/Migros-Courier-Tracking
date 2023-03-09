@@ -7,11 +7,10 @@ import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.jpa.entity.
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.jpa.repository.StoreEntranceJpaRepository;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.jpa.repository.StoreJpaRepository;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.rest.dto.CreateStore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 
 import java.sql.Timestamp;
 import java.util.Collections;
@@ -21,7 +20,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class StoreDataAdapterTest {
 
     @Mock
@@ -30,8 +28,13 @@ public class StoreDataAdapterTest {
     @Mock
     private StoreEntranceJpaRepository storeEntranceJpaRepository;
 
-    @InjectMocks
     private StoreDataAdapter storeDataAdapter;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        storeDataAdapter = new StoreDataAdapter(storeJpaRepository, storeEntranceJpaRepository);
+    }
 
     @Test
     public void testSave() {
@@ -87,7 +90,7 @@ public class StoreDataAdapterTest {
         assertEquals(storeEntity.getLongitude(), store.getLocation().getLon());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testFindByIdNotFound() {
         // given
         Long storeId = 1L;
@@ -96,7 +99,7 @@ public class StoreDataAdapterTest {
         when(storeJpaRepository.findById(storeId)).thenReturn(Optional.empty());
 
         // then
-        storeDataAdapter.findById(storeId);
+        assertThrows(RuntimeException.class, () -> storeDataAdapter.findById(storeId));
     }
 
     @Test

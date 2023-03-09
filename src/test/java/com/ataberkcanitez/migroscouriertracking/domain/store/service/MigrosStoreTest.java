@@ -13,7 +13,7 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class MigrosStoreTest {
+public class MigrosStoreTest {
 
     private MigrosStore migrosStore;
 
@@ -27,7 +27,7 @@ class MigrosStoreTest {
     }
 
     @Test
-    void testSave() {
+    public void testSave() {
         // given
         CreateStore createStore = new CreateStore();
         createStore.setName("Test Store");
@@ -53,7 +53,7 @@ class MigrosStoreTest {
     }
 
     @Test
-    void testSaveWithException() {
+    public void testSaveWithException() {
         // given
         CreateStore createStore = new CreateStore();
         createStore.setName("Test Store");
@@ -74,7 +74,7 @@ class MigrosStoreTest {
     }
 
     @Test
-    void testFindById() {
+    public void testFindById() {
         // given
         Store store = new Store();
         store.setId(1L);
@@ -96,7 +96,7 @@ class MigrosStoreTest {
     }
 
     @Test
-    void testFindByIdWithException() {
+    public void testFindByIdWithException() {
         // given
         when(storePort.findById(1L)).thenThrow(new RuntimeException());
 
@@ -109,7 +109,7 @@ class MigrosStoreTest {
     }
 
     @Test
-    void testRemoveById() {
+    public void testRemoveById() {
         // when
         migrosStore.removeById(1L);
 

@@ -7,30 +7,26 @@ import com.ataberkcanitez.migroscouriertracking.domain.store.service.StoreServic
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.store.rest.dto.CreateStore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
-class StoreControllerTest {
+public class StoreControllerTest {
     @Mock
     private StorePort storePort;
     @Mock
     private StoreService storeService;
 
-    @InjectMocks
     private StoreController storeController;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        storeController = new StoreController(storeService);
     }
 
     @Test

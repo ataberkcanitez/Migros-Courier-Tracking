@@ -4,17 +4,15 @@ import com.ataberkcanitez.migroscouriertracking.domain.location.model.Location;
 import com.ataberkcanitez.migroscouriertracking.domain.store.model.Store;
 import com.ataberkcanitez.migroscouriertracking.domain.store.port.StorePort;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.websocket.CourierLocationSubject;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class StoreEntranceHandlerTest {
 
     @Mock
@@ -23,7 +21,6 @@ public class StoreEntranceHandlerTest {
     @Mock
     private StorePort storePort;
 
-    @InjectMocks
     private StoreEntranceHandler storeEntranceHandler;
 
     private final double courierLatitude = 40.730610;
@@ -34,6 +31,12 @@ public class StoreEntranceHandlerTest {
 
     private final Location courierLocation = new Location(courierLatitude, courierLongitude);
     private final Location storeLocation = new Location(storeLatitude, storeLongitude);
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        storeEntranceHandler = new StoreEntranceHandler(courierLocationSubject, storePort);
+    }
 
     @Test
     public void shouldAttachObserverToCourierLocationSubject() {

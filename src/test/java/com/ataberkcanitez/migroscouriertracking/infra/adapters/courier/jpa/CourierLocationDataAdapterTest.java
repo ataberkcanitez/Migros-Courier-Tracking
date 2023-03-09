@@ -4,23 +4,27 @@ import com.ataberkcanitez.migroscouriertracking.domain.courier.model.Courier;
 import com.ataberkcanitez.migroscouriertracking.domain.location.model.Location;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.jpa.entity.TravelEntity;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.jpa.repository.CourierTravelJpaRepository;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
-@RunWith(MockitoJUnitRunner.class)
 public class CourierLocationDataAdapterTest {
     @Mock
     private CourierTravelJpaRepository travelJpaRepository;
-    @InjectMocks
+
     private CourierLocationDataAdapter adapter;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        adapter = new CourierLocationDataAdapter(travelJpaRepository);
+    }
 
     @Test
     public void shouldTrackCourierLocation() {
@@ -41,7 +45,7 @@ public class CourierLocationDataAdapterTest {
         // given
         Courier courier = Courier.builder()
                 .id(1)
-                .name("Courier 1")
+                .name("John Doe")
                 .totalTravelDistance(10.0)
                 .lastLocation(new Location(40.7128, -74.0060))
                 .build();
@@ -64,7 +68,7 @@ public class CourierLocationDataAdapterTest {
         // given
         Courier updatedCourier = Courier.builder()
                 .id(1)
-                .name("Courier 1")
+                .name("John Doe")
                 .totalTravelDistance(20.0)
                 .lastLocation(new Location(37.7749, -122.4194))
                 .build();

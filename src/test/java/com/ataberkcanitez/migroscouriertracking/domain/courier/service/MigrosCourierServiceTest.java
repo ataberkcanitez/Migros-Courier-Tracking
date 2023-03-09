@@ -4,24 +4,28 @@ import com.ataberkcanitez.migroscouriertracking.domain.courier.model.Courier;
 import com.ataberkcanitez.migroscouriertracking.domain.courier.port.CourierLocationPort;
 import com.ataberkcanitez.migroscouriertracking.domain.location.model.Location;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.rest.dto.CourierTotalDistanceResponse;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class MigrosCourierServiceTest {
 
     @Mock
     private CourierLocationPort courierLocationPort;
 
-    @InjectMocks
     private MigrosCourierService migrosCourierService;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        migrosCourierService = new MigrosCourierService(courierLocationPort);
+    }
 
     @Test
     public void testGetTotalTravelDistance() {
@@ -43,7 +47,7 @@ public class MigrosCourierServiceTest {
         assertEquals(response.totalTravelDistance(), totalDistance, 0.001);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testGetTotalTravelDistanceThrowsException() {
         // given
         long courierId = 12345;
@@ -52,6 +56,8 @@ public class MigrosCourierServiceTest {
         when(courierLocationPort.getCourierTravelTrack(courierId)).thenThrow(new RuntimeException());
 
         // then
-        migrosCourierService.getTotalTravelDistance(courierId);
+        assertThrows(RuntimeException.class, () -> {
+            migrosCourierService.getTotalTravelDistance(courierId);
+        });
     }
 }

@@ -2,25 +2,27 @@ package com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.rest;
 
 import com.ataberkcanitez.migroscouriertracking.domain.courier.service.CourierService;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.rest.dto.CourierTotalDistanceResponse;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class CourierControllerTest {
-
     @Mock
     private CourierService courierService;
 
-    @InjectMocks
     private CourierController courierController;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        courierController = new CourierController(courierService);
+    }
 
     @Test
     public void testGetTotalTravelDistance() {

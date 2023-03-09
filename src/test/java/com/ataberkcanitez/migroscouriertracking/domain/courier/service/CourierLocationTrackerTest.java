@@ -5,20 +5,16 @@ import com.ataberkcanitez.migroscouriertracking.domain.courier.port.CourierLocat
 import com.ataberkcanitez.migroscouriertracking.domain.courier.port.CourierPort;
 import com.ataberkcanitez.migroscouriertracking.domain.location.model.Location;
 import com.ataberkcanitez.migroscouriertracking.infra.adapters.courier.websocket.CourierLocationSubject;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class CourierLocationTrackerTest {
 
     @Mock
@@ -28,12 +24,12 @@ public class CourierLocationTrackerTest {
     @Mock
     private CourierPort courierPort;
 
-    @InjectMocks
     private CourierLocationTracker courierLocationTracker;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        courierLocationTracker = new CourierLocationTracker(courierLocationPort, courierLocationSubject, courierPort);
     }
 
     @Test

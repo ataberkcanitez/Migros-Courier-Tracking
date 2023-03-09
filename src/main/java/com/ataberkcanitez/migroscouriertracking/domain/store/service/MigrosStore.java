@@ -22,7 +22,7 @@ public class MigrosStore implements StoreService {
             log.info("Store saved successfully with id: {}", store.getId());
             return store;
         } catch (Exception e) {
-            log.error("Error while saving store", e);
+            log.error("Error while saving store");
             throw new StoreCreateException("error while saving store");
         }
     }
