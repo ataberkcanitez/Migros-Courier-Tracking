@@ -84,6 +84,7 @@ Receives the courier location, updates the `total-travel-distance` and finds nea
 ```
 - You can use `Postman` to test `WebSocket` api. (can't share the websocket collection, you have to build it for yourself)
 - First click `new` then select `WebSocket Request` and enter the url `ws://localhost:8081/ws/courier-location`
+  ![Postman-WebSocket](docs/img/how-to/websocket-test/postman-websocket.png)
 - Then click `Connect` button
 - Write your `request body` given above in the `Message` section
 - Then click `Send` button to send the request
