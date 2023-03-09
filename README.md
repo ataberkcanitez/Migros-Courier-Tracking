@@ -1,6 +1,13 @@
 # Migros-Courier-Tracking
 
-A Restful web application that trracks the streaming geolocations of couriers and provides the total distance travelled by each courier.
+A spring boot application for tracks couriers location with streaming on `websocket`
+- Calculates the total travel distance of the courier when received a new location data from `websocket`. 
+- Finds the nearby stores with 100 meter that didn't entered within 1 minutes and saves as a `entrance` and `logs`
+
+- Allows you to query couriers `total-travel-distance` with `restful api`.
+
+- Allows the `CRUD` operations for `stores` with `restful apis`.
+
 
 
 ## TechStack
@@ -20,13 +27,13 @@ $ cd Migros-Courier-Tracking
  ```
 then
 ```bash
-$ make up
+$ make start
  ```
 or
 ```bash
-$ docker-compose up
+$ docker-compose up --build
  ```
-wait until it buids and runs the application. Please check if there is any other process that uses `8081` port.
+wait until it builds and runs the application, you must see `Tomcat started` log before you start using. Please check if there is any other process that uses `8081` port.
 
 
 ## Testing
@@ -63,7 +70,9 @@ Code coverage Report:
 For easy use check postman collections in the `docs/postman-collection` directory
 
 #### Streaming Api's
-- `/ws/courier-location` `WebSocket`, Request Body: Receives the courier location, updates the `total-travel-distance` and finds nearby stores with 100 meter that didn't entered within 1 minutes and saves as a `entrance`
+- `/ws/courier-location` `WebSocket`:
+ 
+Receives the courier location, updates the `total-travel-distance` and finds nearby stores with 100 meter that didn't entered within 1 minutes and saves as a `entrance`, Request Body:
 ```json
 {
     "courierId": 1,
@@ -76,7 +85,8 @@ For easy use check postman collections in the `docs/postman-collection` director
 - You can use `Postman` to test `WebSocket` api. (can't share the websocket collection, you have to build it for yourself)
 - First click `new` then select `WebSocket Request` and enter the url `ws://localhost:8081/ws/courier-location`
 - Then click `Connect` button
-- Then click `Send` button to send the request body above
+- Write your `request body` given above in the `Message` section
+- Then click `Send` button to send the request
 
 ### Notes
 - Docker container is running on port `8081` to prevent any conflict with other applications.
@@ -89,6 +99,7 @@ For easy use check postman collections in the `docs/postman-collection` director
 - Authentication
 - Crud operations for courier
 - R-tree or quadtree index for finding nearby stores
+- Redis can be use, right now I'm using local cache with `ConcurrentHashMap`
 
 
 
